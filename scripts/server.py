@@ -24,7 +24,7 @@ def _srv_keepalive(*a, **k):
     return _orig_srv(*a, **k)
 _grpc.server = _srv_keepalive
 from flwr.common import ndarrays_to_parameters
-from couinaudfl.model import build_model
+from couinaudfl.model import build_model, load_init
 from couinaudfl.fsutil import write_marker, ensure_free
 from couinaudfl.fl import CouinaudStrategy, get_nd, METHODS
 
@@ -102,11 +102,25 @@ def wait_for_uploads(a, run):
         time.sleep(30)
 
 
+INIT_EXPORT = "outputs/init_weights.pth"
+
+
+def export_init(cfg_path):
+    """Save the initialization (a CouinaudFL state_dict or TotalSegmentator weights) as a CouinaudFL state_dict,
+    so that the collector can distribute one file to clients for local training."""
+    C = yaml.safe_load(open(cfg_path, encoding="utf-8"))
+    if not C.get("init_weights"): return
+    m = build_model(); kind = load_init(m, C["init_weights"], verbose=False)
+    os.makedirs(os.path.dirname(INIT_EXPORT), exist_ok=True); torch.save(m.state_dict(), INIT_EXPORT)
+    print(f"init weights ({kind}) exported to {INIT_EXPORT}", flush=True)
+
+
 def main():
     import signal, sys as _s
     signal.signal(signal.SIGTERM, lambda *a: _s.exit(0))   # ensure the finally block (collector shutdown) runs on kill
     ap.add_argument("--methods", nargs="*", default=None); a = ap.parse_args()
     run = a.run or datetime.datetime.now().strftime("run_%Y%m%d_%H%M%S")
+    export_init(a.config[0])
     collect = start_collect(a.collect_port, "outputs/collected") if a.collect_port else None
     try:
         for cfg in a.config: run_experiment(cfg, a, run)
@@ -124,7 +138,7 @@ def run_experiment(cfg_path, a, run):
 
     model = build_model(); keys = list(model.state_dict().keys())
     if C.get("init_weights"):
-        sd = torch.load(C["init_weights"], map_location="cpu", weights_only=False); sd = sd.get("model", sd); model.load_state_dict(sd); log(f"init: {C['init_weights']}")
+        kind = load_init(model, C["init_weights"]); log(f"init: {C['init_weights']} ({kind})")
     init_nd = get_nd(model); del model
     log(f"run={run}"); log(f"[{C['experiment']}] address {C['server_address']} | min_clients {C['min_clients']} | rounds {C['rounds']} x local {C['local_epochs']} | folds {folds} | methods {methods}")
     for fold in folds:

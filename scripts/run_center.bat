@@ -49,7 +49,7 @@ for /f "tokens=2" %%u in ('findstr /b "upload_url:" configs\%EXP%.yaml') do set 
 set UURL=%UURL:"=%
 set UURL=%UURL:/upload=%
 if not "%IW%"=="" if not exist "%IW%" (
-  if not exist "%IW%\.." mkdir outputs\pretrain 2>nul
+  for %%F in ("%IW%") do if not exist "%%~dpF" mkdir "%%~dpF" 2>nul
   echo [WEIGHTS] %IW% not found - downloading from %UURL%/weights >> %LOG%
   curl -fsSL -o "%IW%" "%UURL%/weights" || (del "%IW%" 2>nul & echo [ERROR] Initialization weights not available from the server - create %IW% with scripts\pretrain.py, see README & exit /b 1)
 )

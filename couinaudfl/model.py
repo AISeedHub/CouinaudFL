@@ -52,6 +52,20 @@ def load_ts_init(model: nn.Module, ckpt_path: str, verbose: bool = True) -> dict
     return st
 
 
+def load_init(model: nn.Module, path: str, verbose: bool = True) -> str:
+    """Load initialization weights from either
+    (1) a CouinaudFL state_dict (e.g., outputs/pretrain/best.pth), loaded strictly, or
+    (2) an nnU-Net/TotalSegmentator checkpoint (a checkpoint_final.pth file or a folder containing one),
+        transferred with load_ts_init (the segmentation head is newly initialized).
+    Returns "state_dict" or "totalsegmentator"."""
+    if os.path.isdir(path):
+        load_ts_init(model, find_ts_checkpoint(path), verbose); return "totalsegmentator"
+    ck = torch.load(path, map_location="cpu", weights_only=False)
+    if isinstance(ck, dict) and "network_weights" in ck:
+        load_ts_init(model, path, verbose); return "totalsegmentator"
+    model.load_state_dict(ck.get("model", ck)); return "state_dict"
+
+
 def count_params(m: nn.Module) -> int: return sum(p.numel() for p in m.parameters())
 
 

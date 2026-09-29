@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import yaml, torch, pandas as pd, signal
 for _sig in ("SIGINT", "SIGBREAK"):
     if hasattr(signal, _sig): signal.signal(getattr(signal, _sig), signal.SIG_IGN)
-from couinaudfl.model import build_model
+from couinaudfl.model import build_model, load_init
 from couinaudfl.data import list_cases, kfold_split, load_case
 from couinaudfl.train import fit
 from couinaudfl.infer import predict_volume
@@ -34,7 +34,7 @@ def main():
         json.dump({"train": [os.path.basename(x) for x in tr], "val": [os.path.basename(x) for x in va], "test": [os.path.basename(x) for x in te]},
                   open(os.path.join(root, f"fold{fold}_split.json"), "w"), indent=1)
         model = build_model().to(dev)
-        if C.get("init_weights"): sd = torch.load(C["init_weights"], map_location="cpu", weights_only=False); model.load_state_dict(sd.get("model", sd))
+        if C.get("init_weights"): load_init(model, C["init_weights"])
         log(f"=== Single fold {fold}: train {len(tr)} val {len(va)} test {len(te)} epochs {epochs}")
         r = fit(model, tr, va, od, dev, epochs=epochs, lr=C.get("lr", 0.01), amp=amp, num_workers=a.workers, val_every=C.get("local_epochs", 10), log=log)
         from couinaudfl.lesion import lesion_overlap_rows

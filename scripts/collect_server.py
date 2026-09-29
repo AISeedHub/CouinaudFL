@@ -27,7 +27,7 @@ def main():
 
         def do_GET(self):
             if urlparse(self.path).path == "/weights":   # Distribute pretrained weights
-                wp = "outputs/pretrain/best.pth"
+                wp = "outputs/init_weights.pth" if os.path.exists("outputs/init_weights.pth") else "outputs/pretrain/best.pth"
                 if os.path.exists(wp):
                     self.send_response(200); self.send_header("Content-Type", "application/octet-stream")
                     self.send_header("Content-Length", str(os.path.getsize(wp))); self.end_headers()
