@@ -31,8 +31,7 @@ UURL=$(grep -E "^upload_url:" configs/$EXP.yaml | awk '{print $2}' | tr -d '"' |
 if [ -n "$IW" ] && [ ! -s "$IW" ] && [ -n "$UURL" ]; then
   mkdir -p "$(dirname "$IW")"; echo "[WEIGHTS] $IW not found - downloading from $UURL/weights" >> "$LOG"
   curl -fsSL -o "$IW" "$UURL/weights" >> "$LOG" 2>&1 \
-    || curl -fsSL -o "$IW" "https://github.com/AISeedHub/CouinaudFL/releases/download/weights-v2.0/best.pth" >> "$LOG" 2>&1 \
-    || { echo "[ERROR] Pretrained weight download failed (both server and GitHub) - place the file at $IW manually" | tee -a "$LOG"; exit 1; }
+    || { rm -f "$IW"; echo "[ERROR] Initialization weights not available from the server - create $IW with scripts/pretrain.py (see README, Initialization Weights)" | tee -a "$LOG"; exit 1; }
 fi
 echo "[$(date)] start $EXP $SITE run=$RUN" >> "$LOG"
 while true; do

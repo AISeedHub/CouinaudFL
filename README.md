@@ -93,6 +93,27 @@ huggingface-cli download <org>/<repo> --local-dir weights/
 
 All models share the nnU-Net 3d_fullres PlainConvUNet architecture (88.6 M parameters) and were initialized from a common model pretrained on public data (MSD Task08, LiTS, 3D-IRCADb) starting from TotalSegmentator weights.
 
+## Initialization Weights
+
+Federated and local training start from a common model (`init_weights` in the config, default `outputs/pretrain/best.pth`). In the paper this model was obtained in two steps, both reproducible from public resources:
+
+1. Download the official [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) v2 weights for task 291 (Apache-2.0):
+
+   ```bash
+   mkdir -p checkpoints/totalsegmentator/291 && cd checkpoints/totalsegmentator/291
+   curl -LO https://github.com/wasserth/TotalSegmentator/releases/download/v2.0.0-weights/Dataset291_TotalSegmentator_part1_organs_1559subj.zip
+   unzip Dataset291_TotalSegmentator_part1_organs_1559subj.zip && cd -
+   ```
+
+2. Pretrain on public Couinaud-labeled CT (MSD Task08, LiTS, 3D-IRCADb), which writes `outputs/pretrain/best.pth`:
+
+   ```bash
+   .venv/bin/python scripts/pretrain.py --mode pretrain --root <public_data_root> \
+       --ts checkpoints/totalsegmentator/291
+   ```
+
+During federated training, the server distributes this file to all clients, so it is needed only on the server.
+
 ## Usage
 
 ### Evaluate a model

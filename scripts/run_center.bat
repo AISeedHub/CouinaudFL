@@ -51,7 +51,7 @@ set UURL=%UURL:/upload=%
 if not "%IW%"=="" if not exist "%IW%" (
   if not exist "%IW%\.." mkdir outputs\pretrain 2>nul
   echo [WEIGHTS] %IW% not found - downloading from %UURL%/weights >> %LOG%
-  curl -fsSL -o "%IW%" "%UURL%/weights" || curl -fsSL -o "%IW%" "https://github.com/AISeedHub/CouinaudFL/releases/download/weights-v2.0/best.pth" || (echo [ERROR] Pretrained weight download failed - place the file manually & exit /b 1)
+  curl -fsSL -o "%IW%" "%UURL%/weights" || (del "%IW%" 2>nul & echo [ERROR] Initialization weights not available from the server - create %IW% with scripts\pretrain.py, see README & exit /b 1)
 )
 echo [%date% %time%] start %EXP% %SITE% >> %LOG%
 :loop
