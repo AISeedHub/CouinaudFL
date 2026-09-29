@@ -91,7 +91,7 @@ pip install -U huggingface_hub
 huggingface-cli download <org>/<repo> --local-dir weights/
 ```
 
-All models share the nnU-Net 3d_fullres PlainConvUNet architecture (88.6 M parameters) and were initialized from a common model pretrained on public data (MSD Task08, LiTS, 3D-IRCADb) starting from TotalSegmentator weights.
+All models share the nnU-Net 3d_fullres PlainConvUNet architecture (31.2 M trainable parameters) and were initialized from a common model pretrained on public data (MSD Task08, LiTS, 3D-IRCADb) starting from TotalSegmentator weights.
 
 ## Initialization Weights
 
