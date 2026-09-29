@@ -169,11 +169,6 @@ configs/        experiment configurations
 - **Code:** [Apache License 2.0](LICENSE).
 - **Model weights:** released on Hugging Face under separate terms stated in the model card, reflecting the licenses of the public training data and the initialization weights. Research use only.
 
-## Contributors
-
-- **LEE JIN** (AISeed): study design, federated deployment, experiments
-- **[Claude](https://www.anthropic.com/claude)** (Anthropic): AI coding assistant for code writing, refactoring, verification, and documentation
-
 ## Acknowledgments
 
 This work builds on [nnU-Net](https://github.com/MIC-DKFZ/nnUNet), [TotalSegmentator](https://github.com/wasserth/TotalSegmentator), and [Flower](https://flower.ai/). Anthropic Claude (Claude Code) was used as an assistant for code writing, refactoring, and verification; study design, data handling, interpretation, and final verification were performed by the authors.
