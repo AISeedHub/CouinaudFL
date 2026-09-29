@@ -1,8 +1,6 @@
 <div align="center">
 
-# Federated Learning for Couinaud Liver Segmentation at CT
-
-**A real-world multicenter study across four hospitals**
+# Federated Learning for Couinaud Liver Segmentation at CT: A Multicenter Study
 
 [![Paper](https://img.shields.io/badge/Paper-Radiology%3A%20AI%20(submitted)-b31b1b.svg)](#citation)
 [![Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-Hugging%20Face%20(TBA)-ffcc4d.svg)](#pretrained-models)
