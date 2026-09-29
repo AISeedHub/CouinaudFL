@@ -1,0 +1,17 @@
+.venv/
+uv.lock
+__pycache__/
+*.pyc
+outputs
+outputs/
+runs/
+*.pth
+*.pt
+*.npy
+*.log
+STOP.txt
+.env
+_v1_local_backup/
+
+*.out
+*.egg-info/

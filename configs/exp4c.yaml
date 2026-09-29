@@ -1,0 +1,23 @@
+# Four-site federated Couinaud segmentation experiment reported in the paper (FL port 9595)
+experiment: exp4c
+server_address: "0.0.0.0:9595"
+# Replace SERVER_IP with the real server address given at deployment (never commit it)
+client_server_address: "SERVER_IP:9595"
+min_clients: 4
+rounds: 10            # rounds x local_epochs = total epochs (same as single-site)
+local_epochs: 10
+methods: [FedAvg, FedProx, FedAdam, FedBN]
+folds: [0, 1, 2, 3, 4]
+n_folds: 5
+seed: 42
+val_frac: 0.1
+lr: 0.01
+fedprox_mu: 0.01
+fedadam_lr: 0.001
+amp: 0                # fp32 (measured 13.6GB for z96 x 256^2 on a 24GB site GPU)
+init_weights: outputs/pretrain/best.pth
+output_dir: outputs
+upload_url: "http://SERVER_IP:9598/upload"
+round_timeout_sec: 10800
+gap_sec: 10
+run_single: 1

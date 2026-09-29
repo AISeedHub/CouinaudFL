@@ -1,0 +1,26 @@
+[project]
+name = "couinaudfl"
+version = "0.1.0"
+description = "Federated learning for nine-segment Couinaud liver segmentation (nnU-Net-style backbone, TotalSegmentator init)"
+requires-python = ">=3.10"
+# torch/torchvision are intentionally excluded: scripts/install.* installs them to match each machine's CUDA.
+dependencies = [
+  "numpy>=1.24,<2",   # flwr 1.11 is incompatible with NumPy 2 (np.float_)
+  "scipy>=1.10",
+  "nibabel>=5.0",
+  "pyyaml>=6.0",
+  "pandas>=2,<3",
+  "opencv-python-headless>=4.8",
+  "monai>=1.3",
+  "flwr>=1.11,<1.12",
+  "dynamic-network-architectures>=0.3",
+  "tqdm>=4.65",
+  "openpyxl>=3.1",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["couinaudfl*"]
