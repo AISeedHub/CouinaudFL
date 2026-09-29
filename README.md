@@ -104,7 +104,7 @@ All models share the nnU-Net 3d_fullres PlainConvUNet architecture (88.6 M param
 
 Reports 9-segment and 8-segment (S4a + S4b merged) Dice per case and per segment.
 
-### Single-hospital training
+### Local (single-client) training
 
 ```bash
 .venv/bin/python scripts/single.py --config configs/exp4c.yaml --data <data_root> --site A
@@ -120,7 +120,7 @@ Reports 9-segment and 8-segment (S4a + S4b merged) Dice per case and per segment
 
 The server runs every (fold, strategy) session in order, receives results from each site, and exits automatically once all sites have uploaded.
 
-**2. Each hospital.** One command runs the single-hospital 5-fold baseline and then joins all federated sessions, with automatic reconnection and resume:
+**2. Each client.** One command runs the local 5-fold baseline and then joins all federated sessions, with automatic reconnection and resume:
 
 ```bash
 bash scripts/run_center_seq.sh <data_root> <site_code> [spacing_file] exp4c
