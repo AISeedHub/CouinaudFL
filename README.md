@@ -2,7 +2,6 @@
 
 # Federated Learning for Couinaud Liver Segmentation at CT: A Multicenter Study
 
-[![Paper](https://img.shields.io/badge/Paper-Radiology%3A%20AI%20(submitted)-b31b1b.svg)](#citation)
 [![Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-Hugging%20Face%20(TBA)-ffcc4d.svg)](#pretrained-models)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab.svg)](https://www.python.org/)
@@ -85,7 +84,7 @@ Voxel spacing (for volume and HD95) can be supplied as a CSV or XLSX keyed by fo
 |:--|:--:|:--|
 | FedAvg (final round) | 5 | One model per cross-validation fold, trained on four hospitals |
 
-Download from **[Hugging Face — link to be added on publication]**:
+Download from **[Hugging Face — link to be added on publication]** or from the [GitHub release](https://github.com/AISeedHub/CouinaudFL/releases/tag/weights-v1.0):
 
 ```bash
 pip install -U huggingface_hub
