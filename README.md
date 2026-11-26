@@ -165,18 +165,6 @@ scripts/        training, federated server/client, evaluation, export
 configs/        experiment configurations
 ```
 
-## Citation
-
-```bibtex
-@article{couinaudfl2026,
-  title   = {Federated Learning for Couinaud Liver Segmentation at CT: A Multicenter Study},
-  author  = {TBA},
-  journal = {Radiology: Artificial Intelligence},
-  year    = {2026},
-  note    = {Submitted}
-}
-```
-
 ## License
 
 - **Code:** [Apache License 2.0](LICENSE).
