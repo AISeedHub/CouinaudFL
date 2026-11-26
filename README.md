@@ -2,7 +2,7 @@
 
 # Federated Learning for Couinaud Liver Segmentation at CT: A Multicenter Study
 
-[![Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-Hugging%20Face%20(TBA)-ffcc4d.svg)](#pretrained-models)
+[![Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-Hugging%20Face-ffcc4d.svg)](https://huggingface.co/AISeedCorp/CouinaudFL)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
@@ -84,11 +84,11 @@ Voxel spacing (for volume and HD95) can be supplied as a CSV or XLSX keyed by fo
 |:--|:--:|:--|
 | FedAvg (final round) | 5 | One model per cross-validation fold, trained on four hospitals |
 
-Download from **[Hugging Face — link to be added on publication]** or from the [GitHub release](https://github.com/AISeedHub/CouinaudFL/releases/tag/weights-v1.0):
+Download from **[Hugging Face](https://huggingface.co/AISeedCorp/CouinaudFL)** or from the [GitHub release](https://github.com/AISeedHub/CouinaudFL/releases/tag/weights-v1.0):
 
 ```bash
 pip install -U huggingface_hub
-huggingface-cli download <org>/<repo> --local-dir weights/
+huggingface-cli download AISeedCorp/CouinaudFL --local-dir weights/
 ```
 
 All models share the nnU-Net 3d_fullres PlainConvUNet architecture (31.2 M trainable parameters) and were initialized from a common model pretrained on public data (MSD Task08, LiTS, 3D-IRCADb) starting from TotalSegmentator weights.
